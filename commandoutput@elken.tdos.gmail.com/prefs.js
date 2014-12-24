@@ -4,12 +4,17 @@ const GObject = imports.gi.GObject;
 const Gtk = imports.gi.Gtk;
 
 const Extension = imports.misc.extensionUtils.getCurrentExtension();
-const Convenience = Extension.imports.convenience;
+const Settings = Extension.imports.settings;
 
 const Gettext = imports.gettext.domain('gnome-shell-extensions');
 const _ = Gettext.gettext;
 
 const SCHEMA_NAME = "org.gnome.shell.extensions.commandoutput";
+
+const Keys = {
+    RATE: 'refresh-rate',
+    COMMAND: 'command'
+};
 
 const CommandOutputPrefs = new GObject.Class({
         Name: 'CommandOutput.Prefs',
@@ -26,7 +31,7 @@ const CommandOutputPrefs = new GObject.Class({
                 row_homogeneous: true
             });
 
-            this.main.attach(new Gtk.Label({label: _("Refresh interval (in ms)"),
+            this.main.attach(new Gtk.Label({label: _("Refresh interval (seconds)"),
                                             hexpand: true,
                                             halign: Gtk.Align.START}), 1, 1, 1, 1);
 
@@ -36,9 +41,9 @@ const CommandOutputPrefs = new GObject.Class({
 
             this.rate = new Gtk.SpinButton({
                     adjustment: new Gtk.Adjustment({
-                            lower: 0,
+                            lower: 1,
                             upper: 2147483647,
-                            step_increment: 1000
+                            step_increment: 1
                     }),
                     halign: Gtk.Align.END
             });
@@ -48,23 +53,13 @@ const CommandOutputPrefs = new GObject.Class({
             this.main.attach(this.rate, 4, 1, 2, 1);
             this.main.attach(this.command, 4, 2, 2, 1);
 
-            //this.settings = this._getSchema();
-            this.settings = Convenience.getSettings();
+            this.settings = Settings.getSchema(Extension);
 
-            this.settings.bind('refresh-rate', this.rate,    'text',  Gio.SettingsBindFlags.DEFAULT);
-            this.settings.bind('command',      this.command, 'value', Gio.SettingsBindFlags.DEFAULT);
+            this.settings.bind(Keys.RATE,         this.rate,    'value',Gio.SettingsBindFlags.DEFAULT);
+            this.settings.bind(Keys.COMMAND,      this.command, 'text', Gio.SettingsBindFlags.DEFAULT);
 
             this.main.show_all();
         },
-
-            /*
-        _getSchema: function() {
-             let schemaDir = Extension.dir.get_child('schemas').get_path();
-             let schemaSource = Gio.SettingsSchemaSource.new_from_directory(schemaDir, Gio.SettingsSchemaSource.get_default(), false);
-             let schema = schemaSource.lookup(SCHEMA_NAME, false);
-             return new Gio.Settings({ settings_schema: schema  });
-        },
-             */
 });
 
 function init() {

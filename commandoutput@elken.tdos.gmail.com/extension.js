@@ -1,67 +1,49 @@
-/* TODO:
- * - Get anything working
- * :(
- */
-
 const St = imports.gi.St;
-const Shell = imports.gi.Shell
 const GLib = imports.gi.GLib;
 const Gio = imports.gi.Gio;
 
 const Lang = imports.lang;
 const Mainloop = imports.mainloop;
-const Util = imports.misc.util;
 const Main = imports.ui.main;
-const Tweener = imports.ui.tweener;
 
-const WIDTH = 50;
-const COMMAND = "/usr/bin/echo It works! ";
+const Extension = imports.misc.extensionUtils.getCurrentExtension();
+const Settings = Extension.imports.settings;
+const Prefs = Extension.imports.prefs;
+
 const LOCALE = GLib.get_language_names()[1];
-
-const INTERVAL = 500;
-
-const POSITION = {
-    CENTER: 0,
-    LEFT: 1,
-    RIGHT: 2,
-    TRAY: 3
-};
 
 const CommandOutput = new Lang.Class({
         Name: 'CommandOutput.Extension',
-        _button: null,
+        _outputLabel: new St.Label({text: "Starting up.."}),
+        _output: new St.Bin({reactive: false, track_hover: false}),
+        _settings: Settings.getSchema(Extension),
+        _command: null,
+        _refreshRate: null,
+        _timeout: null,
+        _changeTimeout: false,
 
         enable: function() {
-            iText = this._doCommand();
-            this._button = new St.Bin({reactive: false, track_hover: false});
-            let text = new St.Label({text: iText});
-            this._button.set_child(text);
-
-            Main.panel._rightBox.insert_child_at_index(this._button, 0);
+            this._output.set_child(this._outputLabel);
+            this._timeout = null;
+            this._changeTimeout = true;
+            this._update();
+            //Mainloop.timeout_add(1000, Lang.bind(this, this._update));
+            Main.panel._rightBox.insert_child_at_index(this._output, 0);
         },
 
         disable: function() {
-            Main.panel._rightBox.remove_child(this._button);
+            Main.panel._rightBox.remove_child(this._output);
         },
 
         _init:  function() {
+            this._command = this._settings.get_string(Prefs.Keys.COMMAND);
+            this._refreshRate = this._settings.get_int(Prefs.Keys.RATE);
         },
 
         _doCommand: function() {
-            [res,pid,fdin,fdout,fderr] = GLib.spawn_async_with_pipes(null, this._toUtfArray(COMMAND), null, 0, null);
-            outstream = new Gio.UnixInputStream({fd:fdout,close_fd:true});
-            stdout = new Gio.DataInputStream({base_stream: outstream});
-            watch = GLib.child_watch_add(0, pid, function(pid, status) {
-                    try {
-                        GLib.source_remove(watch);
-                        callback(pid, status, stdout);
-                        stdout.close(null);
-                        outstream.close(null);
-                    } catch(err) {
-                        Main.notify(err);
-                    }
-                }
-            )
+            [res,pid,fdin,fdout,fderr] = GLib.spawn_async_with_pipes(null, this._toUtfArray(this._command), null, GLib.SpawnFlags.SEARCH_PATH, null);
+            let outstream = new Gio.UnixInputStream({fd:fdout,close_fd:true});
+            let stdout = new Gio.DataInputStream({base_stream: outstream});
 
             let [out, size] = stdout.read_line(null);
 
@@ -69,9 +51,23 @@ const CommandOutput = new Lang.Class({
         },
 
         _toUtfArray: function(str) {
-            arr = str.split(" ");
+            let arr = str.split(" ");
             return arr;
         },
+
+        _update: function() {
+            let iText = this._doCommand();
+            this._outputLabel.set_text(iText);
+            //this._removeTimeout();
+            this._timeout = Mainloop.timeout_add_seconds(this._refreshRate, Lang.bind(this, this._update()));
+        },
+
+        _removeTimeout: function() {
+            if(this._timeout) {
+                Mainloop.source_remove(this._timeout);
+                this._timeout = null;
+            }
+        }
 });
 
 function init() {
