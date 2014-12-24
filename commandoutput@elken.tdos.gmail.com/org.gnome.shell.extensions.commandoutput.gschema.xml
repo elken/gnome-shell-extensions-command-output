@@ -1,0 +1,14 @@
+<schemalist gettext-domain="gnome-shell-extensions">
+    <schema id="org.gnome.shell.extensions.commandoutput" path="/org/gnome/shell/extensions/commandoutput/">
+        <key name="refresh-rate" type="i">
+            <default>2000</default>
+            <summary>Time between each execution</summary>
+            <description>Time (in ms) to rerun each command</description>
+        </key>
+        <key name="command" type="s">
+            <default>'echo It works!'</default>
+            <summary>Command to run</summary>
+            <description>Set to any command that is in $PATH</description>
+        </key>
+    </schema>
+</schemalist>
