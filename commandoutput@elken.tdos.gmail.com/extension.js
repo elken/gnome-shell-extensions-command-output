@@ -9,7 +9,6 @@ const Util = imports.misc.util;
 
 const Extension = imports.misc.extensionUtils.getCurrentExtension();
 const Settings = Extension.imports.settings;
-const Prefs = Extension.imports.prefs;
 
 const LOCALE = GLib.get_language_names()[1];
 
@@ -17,22 +16,31 @@ const CommandOutput = new Lang.Class({
         Name: 'CommandOutput.Extension',
 
         enable: function() {
-            this._output.set_child(this._outputLabel);
             this._update();
-            this._output.connect('button-release-event', this._openSettings);
             Main.panel._rightBox.insert_child_at_index(this._output, 0);
         },
 
         disable: function() {
             this._save();
             Main.panel._rightBox.remove_child(this._output);
+            Mainloop.timeout_add_seconds(this._refreshRate, Lang.bind(this, this._update));
+            this._stopped = true;
         },
 
         _init:  function() {
+            this._stopped = false;
             this._settings = Settings.getSchema(Extension);
             this._load();
             this._outputLabel = new St.Label({text: "Starting up.."});
-            this._output = new St.Bin({reactive: false, track_hover: false});
+            this._output = new St.Bin({
+                                reactive: true,
+                                can_focus: true,
+                                x_fill: true,
+                                y_fill: false,
+                                track_hover: true });
+
+            this._output.set_child(this._outputLabel);
+            this._output.connect('button-release-event', this._openSettings);
         },
 
         _doCommand: function() {
@@ -42,28 +50,46 @@ const CommandOutput = new Lang.Class({
 
             let [out, size] = stdout.read_line(null);
 
-            return out.toString();
+            if(out == null) {
+                return "Error executing command."
+            }
+            else {
+                return out.toString();
+            }
         },
 
         _toUtfArray: function(str) {
-            let arr = str.split(" ");
+            for(var i=0; i < str.length;i++) {
+                if(str[i] == "~") {
+                    let re = /~/gi;
+                    s = str.replace(re, GLib.get_home_dir());
+                }
+            }
+            let arr = s.split(" ");
             return arr;
         },
 
-        _update: function() {
+        _refresh: function() {
+            this._load();
             let iText = this._doCommand();
             this._outputLabel.set_text(iText);
-            Mainloop.timeout_add_seconds(1, Lang.bind(this, this._update));
+        },
+
+        _update: function() {
+            this._refresh();
+            if (this._stopped == false) {
+                Mainloop.timeout_add_seconds(this._refreshRate, Lang.bind(this, this._update));
+            }
         },
 
         _load: function() {
-            this._command = this._settings.get_string(Prefs.Keys.COMMAND);
-            this._refreshRate = this._settings.get_int(Prefs.Keys.RATE);
+            this._command = this._settings.get_string(Settings.Keys.COMMAND);
+            this._refreshRate = this._settings.get_int(Settings.Keys.RATE);
         },
 
         _save: function() {
-            this._settings.set_string(Prefs.Keys.COMMAND, this._command);
-            this._settings.set_int(Prefs.Keys.RATE, this._refreshRate);
+            this._settings.set_string(Settings.Keys.COMMAND, this._command);
+            this._settings.set_int(Settings.Keys.RATE, this._refreshRate);
         },
 
         _openSettings: function () {

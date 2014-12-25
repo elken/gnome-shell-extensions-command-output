@@ -4,6 +4,18 @@ const Gettext = imports.gettext;
 
 const SCHEMA_NAME = "org.gnome.shell.extensions.commandoutput";
 
+const Keys = {
+    RATE: 'refresh-rate',
+    COMMAND: 'command'
+};
+
+const POSITION = {
+    LEFT: 0,
+    CENTER: 1,
+    RIGHT: 2,
+    PANEL: 3,
+};
+
 function getSchema(extension) {
     let schemaDir = extension.dir.get_child('schemas').get_path();
 
