@@ -54,8 +54,8 @@ const CommandOutputPrefs = new GObject.Class({
             this._settings.bind(Settings.Keys.RATE,         this.rate,    'value',Gio.SettingsBindFlags.DEFAULT);
             this._settings.bind(Settings.Keys.COMMAND,      this.command, 'text', Gio.SettingsBindFlags.DEFAULT);
 
-            this.command.connect('activate', Lang.bind(this, this._save));
-            this.rate.connect('value-changed', Lang.bind(this, this._save));
+            this._commandID = this.command.connect('activate', Lang.bind(this, this._save));
+            this._rateID = this.rate.connect('value-changed', Lang.bind(this, this._save));
 
             this.main.show_all();
         },
