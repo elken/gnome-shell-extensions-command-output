@@ -1,15 +1,11 @@
-#: extension.js:7
-msgid "Starting up"
-msgstr ""
-
 #: extension.js:50
 msgid "Error executing command"
-msgstr ""
+msgstr "Fehler Ausführen-Befehl"
 
 #: prefs.js:30
 msgid "Refresh interval (seconds)"
-msgstr ""
+msgstr "Aktualisierungsintervall"
 
 #: prefs.js:34
 msgid "Command to output"
-msgstr ""
+msgstr "Befehl zur Ausgabe"
