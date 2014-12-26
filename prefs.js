@@ -18,9 +18,7 @@ const CommandOutputPrefs = new GObject.Class({
         Extends: Gtk.Grid,
 
         _init: function(params) {
-            let localeDir = Extension.dir.get_child('po/locale');
-            if (localeDir.query_exists(null))
-                Gettext.bindtextdomain('commandoutput', localeDir.get_path());
+            Settings.initTranslations(Extension);
             this.parent(params);
             this.main = new Gtk.Grid({
                 margin: 10,

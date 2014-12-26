@@ -10,8 +10,7 @@ const Util = imports.misc.util;
 const Extension = imports.misc.extensionUtils.getCurrentExtension();
 const Settings = Extension.imports.settings;
 
-const Gettext = imports.gettext;
-
+const Gettext = imports.gettext.domain('gnome-shell-extensions');
 const _ = Gettext.gettext;
 
 const CommandOutput = new Lang.Class({
@@ -41,9 +40,7 @@ const CommandOutput = new Lang.Class({
         },
 
         _init:  function() {
-        let localeDir = Extension.dir.get_child('po/locale');
-        if (localeDir.query_exists(null))
-            Gettext.bindtextdomain('commandoutput', localeDir.get_path());
+            Settings.initTranslations(Extension);
         },
 
         _doCommand: function() {
@@ -62,10 +59,11 @@ const CommandOutput = new Lang.Class({
         },
 
         _toUtfArray: function(str) {
+            let s = str;
             for(var i=0; i < str.length;i++) {
                 if(str[i] == "~") {
                     let re = /~/gi;
-                    var s = str.replace(re, GLib.get_home_dir());
+                    s = str.replace(re, GLib.get_home_dir());
                 }
             }
             let arr = s.split(" ");
