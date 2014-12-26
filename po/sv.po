@@ -1,5 +1,5 @@
-# French translations for PACKAGE package
-# Traductions françaises du paquet PACKAGE.
+# Swedish translations for PACKAGE package
+# Svenska översättningar för paket PACKAGE.
 # Copyright (C) 2014 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # elken <elken.tdos@gmail.com>, 2014.
@@ -9,27 +9,26 @@ msgstr ""
 "Project-Id-Version: CommandOutput\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-12-25 20:39+0000\n"
-"PO-Revision-Date: 2014-12-26 10:19+0100\n"
+"PO-Revision-Date: 2014-12-26 10:21+0100\n"
 "Last-Translator: Ellis Kenyo <elken.tdos@gmail.com>\n"
-"Language-Team: French\n"
-"Language: fr\n"
+"Language-Team: Swedish\n"
+"Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 1.5.4\n"
 
 #: ../extension.js:57
 #, fuzzy
 msgid "Error executing command."
-msgstr "Commande l'exécution d'erreur"
+msgstr "Fel exekvera kommandot"
 
 #: ../prefs.js:30
 #, fuzzy
 msgid "Refresh interval (seconds)"
-msgstr "Intervalle de mise à jour en quelques secondes"
+msgstr "Uppdateringsintervall i sekunder"
 
 #: ../prefs.js:34
-#, fuzzy
 msgid "Command to output"
-msgstr "Commande à la sortie"
+msgstr "Uppdateringsintervall i sekunder"

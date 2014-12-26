@@ -1,15 +1,35 @@
-#: extension.js:7
-msgid "Starting up"
+# Italian translations for PACKAGE package
+# Traduzioni italiane per il pacchetto PACKAGE..
+# Copyright (C) 2014 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# elken <elken.tdos@gmail.com>, 2014.
+#
+msgid ""
 msgstr ""
+"Project-Id-Version: CommandOutput\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-12-25 20:39+0000\n"
+"PO-Revision-Date: 2014-12-26 10:20+0100\n"
+"Last-Translator: Ellis Kenyo <elken.tdos@gmail.com>\n"
+"Language-Team: Italian\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.5.4\n"
 
-#: extension.js:50
-msgid "Error executing command"
-msgstr ""
+#: ../extension.js:57
+#, fuzzy
+msgid "Error executing command."
+msgstr "Errore comando di esecuzione"
 
-#: prefs.js:30
+#: ../prefs.js:30
+#, fuzzy
 msgid "Refresh interval (seconds)"
-msgstr ""
+msgstr "Intervallo di aggiornamento in secondi"
 
-#: prefs.js:34
+#: ../prefs.js:34
+#, fuzzy
 msgid "Command to output"
-msgstr ""
+msgstr "Comando per l'uscita"
