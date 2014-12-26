@@ -1,4 +1,4 @@
-gnome-shell-extensions-command-output
+Command Output
 =====================================
 
 Simple widget to provide the output of a specified command every specified interval.
