@@ -16,3 +16,8 @@ function getSchema(extension) {
     let schema = schemaSource.lookup(SCHEMA_NAME, false);
     return new Gio.Settings({ settings_schema: schema  });
 }
+
+function initTranslations(extension) {
+    let localeDir = extension.dir.get_child('locale').get_path();
+    Gettext.bindtextdomain('gnome-shell-extensions-mediaplayer', localeDir);
+}

@@ -10,6 +10,10 @@ const Util = imports.misc.util;
 const Extension = imports.misc.extensionUtils.getCurrentExtension();
 const Settings = Extension.imports.settings;
 
+const Gettext = imports.gettext;
+
+const _ = Gettext.gettext;
+
 const CommandOutput = new Lang.Class({
         Name: 'CommandOutput.Extension',
 
@@ -37,6 +41,9 @@ const CommandOutput = new Lang.Class({
         },
 
         _init:  function() {
+        let localeDir = Extension.dir.get_child('po/locale');
+        if (localeDir.query_exists(null))
+            Gettext.bindtextdomain('commandoutput', localeDir.get_path());
         },
 
         _doCommand: function() {
@@ -47,7 +54,7 @@ const CommandOutput = new Lang.Class({
             let [out, size] = stdout.read_line(null);
 
             if(out == null) {
-                return "Error executing command."
+                return _("Error executing command.");
             }
             else {
                 return out.toString();

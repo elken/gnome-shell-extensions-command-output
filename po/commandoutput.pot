@@ -3,27 +3,28 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: CommandOutput\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-20 21:28-0700\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"POT-Creation-Date: 2014-12-25 20:39+0000\n"
+"PO-Revision-Date: 2014-12-26 10:26+0100\n"
+"Last-Translator: Ellis Kenyo <elken.tdos@gmail.com>\n"
+"Language-Team: elken <elken.tdos@gmail.com>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.4\n"
+"Language: English\n"
 
-#: extension.js:50
-msgid "Error executing command"
+#: ../extension.js:57
+msgid "Error executing command."
 msgstr ""
 
-#: prefs.js:30
+#: ../prefs.js:30
 msgid "Refresh interval (seconds)"
 msgstr ""
 
-#: prefs.js:34
+#: ../prefs.js:34
 msgid "Command to output"
 msgstr ""

@@ -1,11 +1,35 @@
-#: extension.js:50
-msgid "Error executing command"
-msgstr "Fehler AusfÃ¼hren-Befehl"
+# German translations for PACKAGE package
+# German translation for PACKAGE.
+# Copyright (C) 2014 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# elken <elken.tdos@gmail.com>, 2014.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: CommandOutput\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-12-25 20:39+0000\n"
+"PO-Revision-Date: 2014-12-26 10:17+0100\n"
+"Last-Translator: Ellis Kenyo <elken.tdos@gmail.com>\n"
+"Language-Team: German\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.5.4\n"
 
-#: prefs.js:30
+#: ../extension.js:57
+#, fuzzy
+msgid "Error executing command."
+msgstr "Fehler beim Ausführen des Befehls"
+
+#: ../prefs.js:30
+#, fuzzy
 msgid "Refresh interval (seconds)"
-msgstr "Aktualisierungsintervall"
+msgstr "Aktualisierungsintervall in Sekunden"
 
-#: prefs.js:34
+#: ../prefs.js:34
+#, fuzzy
 msgid "Command to output"
-msgstr "Befehl zur Ausgabe"
+msgstr "Befehls ausgegeben"
