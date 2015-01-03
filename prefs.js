@@ -40,7 +40,7 @@ const CommandOutputPrefs = new GObject.Class({
                     adjustment: new Gtk.Adjustment({
                             lower: 1,
                             upper: 2147483647,
-                            step_increment: 1
+                            step_increment: 1000
                     }),
                     halign: Gtk.Align.END
             });
