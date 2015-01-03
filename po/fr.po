@@ -22,14 +22,14 @@ msgstr ""
 #: ../extension.js:57
 #, fuzzy
 msgid "Error executing command."
-msgstr "Commande l'exécution d'erreur"
+msgstr "Erreur lors de l'exécution de la commande"
 
 #: ../prefs.js:30
 #, fuzzy
 msgid "Refresh interval (seconds)"
-msgstr "Intervalle de mise à jour en quelques secondes"
+msgstr "Intervalle de mise à jour (en secondes)"
 
 #: ../prefs.js:34
 #, fuzzy
 msgid "Command to output"
-msgstr "Commande à la sortie"
+msgstr "Commande à exécuter"
