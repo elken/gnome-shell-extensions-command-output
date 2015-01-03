@@ -1,1 +1,7 @@
-{"shell-version": ["3.14.2"], "uuid": "commandoutput@elken.tdos.gmail.com", "name": "Command Output", "description": "Display the output of a shell command"}
+{
+    "shell-version": ["3.10", "3.11", "3.12", "3.13", "3.14"], 
+    "uuid": "commandoutput@elken.tdos.gmail.com",
+    "name": "Command Output",
+    "description": "Display the output of a shell command",
+    "url": "https://www.github.com/elken/gnome-shell-extensions-command-output"
+}
