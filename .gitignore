@@ -12,3 +12,7 @@ Makefile.in
 /install-sh
 /missing
 /stamp-h1
+
+/build
+/test
+commandoutput@elken.tdos.gmail.com.zip

@@ -19,5 +19,5 @@ function getSchema(extension) {
 
 function initTranslations(extension) {
     let localeDir = extension.dir.get_child('locale').get_path();
-    Gettext.bindtextdomain('gnome-shell-extensions-mediaplayer', localeDir);
+    Gettext.bindtextdomain('gnome-shell-extensions', localeDir);
 }
