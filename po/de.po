@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: CommandOutput\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-12-25 20:39+0000\n"
-"PO-Revision-Date: 2014-12-26 10:17+0100\n"
-"Last-Translator: Ellis Kenyo <elken.tdos@gmail.com>\n"
+"PO-Revision-Date: 2015-01-16 21:20+0100\n"
+"Last-Translator: Jonatan Zeidler <jonatan_zeidler@gmx.de>\n"
 "Language-Team: German\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -20,16 +20,13 @@ msgstr ""
 "X-Generator: Poedit 1.5.4\n"
 
 #: ../extension.js:57
-#, fuzzy
 msgid "Error executing command."
 msgstr "Fehler beim Ausführen des Befehls"
 
 #: ../prefs.js:30
-#, fuzzy
 msgid "Refresh interval (seconds)"
 msgstr "Aktualisierungsintervall in Sekunden"
 
 #: ../prefs.js:34
-#, fuzzy
 msgid "Command to output"
-msgstr "Befehls ausgegeben"
+msgstr "Befehl für die Ausgabe"
