@@ -28,7 +28,7 @@ const CommandOutputPrefs = new GObject.Class({
                 row_homogeneous: true
             });
 
-            this.main.attach(new Gtk.Label({label: _("Refresh interval (seconds)"),
+            this.main.attach(new Gtk.Label({label: _("Refresh interval (milliseconds)"),
                                             hexpand: true,
                                             halign: Gtk.Align.START}), 1, 1, 1, 1);
 
