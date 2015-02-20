@@ -28,7 +28,7 @@ const CommandOutputPrefs = new GObject.Class({
                 row_homogeneous: true
             });
 
-            this.main.attach(new Gtk.Label({label: _("Refresh interval (milliseconds)"),
+            this.main.attach(new Gtk.Label({label: _("Refresh interval (seconds)"),
                                             hexpand: true,
                                             halign: Gtk.Align.START}), 1, 1, 1, 1);
 
@@ -40,7 +40,7 @@ const CommandOutputPrefs = new GObject.Class({
                     adjustment: new Gtk.Adjustment({
                             lower: 1,
                             upper: 2147483647,
-                            step_increment: 1000
+                            step_increment: 1
                     }),
                     halign: Gtk.Align.END
             });

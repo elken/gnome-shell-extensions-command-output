@@ -10,15 +10,15 @@ const Util = imports.misc.util;
 const Extension = imports.misc.extensionUtils.getCurrentExtension();
 const Settings = Extension.imports.settings;
 
-const Gettext = imports.gettext.domain('gnome-shell-extensions');
+const Gettext = imports.gettext;
+
 const _ = Gettext.gettext;
 
 const CommandOutput = new Lang.Class({
         Name: 'CommandOutput.Extension',
 
         enable: function() {
-            this._outputLabel = new St.Label({ style_class: 'co-label'});
-
+            this._outputLabel = new St.Label();
             this._output = new St.Bin({reactive: true, 
                 track_hover: true
             });
@@ -59,15 +59,28 @@ const CommandOutput = new Lang.Class({
             }
         },
 
-        _toUtfArray: function(str) {
-            let s = str;
+        _isFound: function(str) {
+            var f = false;
             for(var i=0; i < str.length;i++) {
                 if(str[i] == "~") {
-                    let re = /~/gi;
-                    s = str.replace(re, GLib.get_home_dir());
+                    f = true;
                 }
             }
-            let arr = s.split(" ");
+
+            if(f) {
+                let re = /~/gi;
+                let s = str.replace(re, GLib.get_home_dir());
+                return [f, s];
+            }
+            else {
+                return [f,str];
+            }
+        },
+
+        _toUtfArray: function(str) {
+            let [f, s2] = this._isFound(str);
+            let arr = s2.split(" ");
+
             return arr;
         },
 
