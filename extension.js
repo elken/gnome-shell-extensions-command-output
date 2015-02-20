@@ -10,20 +10,22 @@ const Util = imports.misc.util;
 const Extension = imports.misc.extensionUtils.getCurrentExtension();
 const Settings = Extension.imports.settings;
 
-const Gettext = imports.gettext.domain('gnome-shell-extensions');
+const Gettext = imports.gettext;
+
 const _ = Gettext.gettext;
 
 const CommandOutput = new Lang.Class({
         Name: 'CommandOutput.Extension',
-
+        
         enable: function() {
-            this._outputLabel = new St.Label({ style_class: 'co-label'});
-
+            this._outputLabel = new St.Label({style_class: "co-label"});
             this._output = new St.Bin({reactive: true, 
                 track_hover: true
             });
 
+            this._iText = "";
             this._stopped = false;
+            this._loaded = false;
             this._settings = Settings.getSchema(Extension);
             this._load();
             this._output.set_child(this._outputLabel);
@@ -55,26 +57,56 @@ const CommandOutput = new Lang.Class({
                 return _("Error executing command.");
             }
             else {
-                return out.toString();
+                outS = out.toString();
+                outS += " ";
+                return outS;
+            }
+        },
+
+        _doScroll: function(str) {
+            var buf = str[0];
+            var str2 = "";
+            for(var i=1;i<str.length;i++) {
+                str2 += str[i];
+            }
+
+            str2 += buf;
+            return str2;
+        },
+
+        _isFound: function(str) {
+            var f = false;
+            for(var i=0; i < str.length;i++) {
+                if(str[i] == "~") {
+                    f = true;
+                }
+            }
+
+            if(f) {
+                let re = /~/gi;
+                let s = str.replace(re, GLib.get_home_dir());
+                return [f, s];
+            }
+            else {
+                return [f,str];
             }
         },
 
         _toUtfArray: function(str) {
-            let s = str;
-            for(var i=0; i < str.length;i++) {
-                if(str[i] == "~") {
-                    let re = /~/gi;
-                    s = str.replace(re, GLib.get_home_dir());
-                }
-            }
-            let arr = s.split(" ");
+            let [f, s2] = this._isFound(str);
+            let arr = s2.split(" ");
+
             return arr;
         },
 
         _refresh: function() {
-            this._load();
-            let iText = this._doCommand();
-            this._outputLabel.set_text(iText);
+            if(!this._loaded) {
+                this._load();
+                this._iText = this._doCommand();
+                this._loaded = true;
+            }
+            this._iText = this._doScroll(this._iText);
+            this._outputLabel.set_text(this._iText);
         },
 
         _update: function() {
