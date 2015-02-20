@@ -18,7 +18,7 @@ const CommandOutput = new Lang.Class({
         Name: 'CommandOutput.Extension',
 
         enable: function() {
-            this._outputLabel = new St.Label();
+            this._outputLabel = new St.Label({style_class: "co-label"});
             this._output = new St.Bin({reactive: true, 
                 track_hover: true
             });
