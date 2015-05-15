@@ -16,14 +16,16 @@ const _ = Gettext.gettext;
 
 const CommandOutput = new Lang.Class({
         Name: 'CommandOutput.Extension',
-
+        
         enable: function() {
-            this._outputLabel = new St.Label();
+            this._outputLabel = new St.Label({style_class: "co-label"});
             this._output = new St.Bin({reactive: true, 
                 track_hover: true
             });
 
+            this._iText = "";
             this._stopped = false;
+            this._loaded = false;
             this._settings = Settings.getSchema(Extension);
             this._load();
             this._output.set_child(this._outputLabel);
@@ -55,8 +57,21 @@ const CommandOutput = new Lang.Class({
                 return _("Error executing command.");
             }
             else {
-                return out.toString();
+                outS = out.toString();
+                outS += " ";
+                return outS;
             }
+        },
+
+        _doScroll: function(str) {
+            var buf = str[0];
+            var str2 = "";
+            for(var i=1;i<str.length;i++) {
+                str2 += str[i];
+            }
+
+            str2 += buf;
+            return str2;
         },
 
         _isFound: function(str) {
@@ -85,9 +100,13 @@ const CommandOutput = new Lang.Class({
         },
 
         _refresh: function() {
-            this._load();
-            let iText = this._doCommand();
-            this._outputLabel.set_text(iText);
+            if(!this._loaded) {
+                this._load();
+                this._iText = this._doCommand();
+                this._loaded = true;
+            }
+            this._iText = this._doScroll(this._iText);
+            this._outputLabel.set_text(this._iText);
         },
 
         _update: function() {
