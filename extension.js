@@ -16,14 +16,16 @@ const _ = Gettext.gettext;
 
 const CommandOutput = new Lang.Class({
         Name: 'CommandOutput.Extension',
-
+        
         enable: function() {
-            this._outputLabel = new St.Label();
+            this._outputLabel = new St.Label({style_class: "co-label"});
             this._output = new St.Bin({reactive: true, 
                 track_hover: true
             });
 
+            this._iText = "";
             this._stopped = false;
+            this._loaded = false;
             this._settings = Settings.getSchema(Extension);
             this._load();
             this._output.set_child(this._outputLabel);
@@ -47,16 +49,35 @@ const CommandOutput = new Lang.Class({
         _doCommand: function() {
             [res,pid,fdin,fdout,fderr] = GLib.spawn_async_with_pipes(null, this._toUtfArray(this._command), null, GLib.SpawnFlags.SEARCH_PATH, null);
             let outstream = new Gio.UnixInputStream({fd:fdout,close_fd:true});
+            let errstream = new Gio.UnixInputStream({fd:fderr,close_fd:true});
             let stdout = new Gio.DataInputStream({base_stream: outstream});
+            let stderr = new Gio.DataInputStream({base_stream: errstream});
 
-            let [out, size] = stdout.read_line(null);
+            let [out, o_size] = stdout.read_line(null);
+            
+            outstream.close(null);
+            errstream.close(null);
 
             if(out == null) {
-                return _("Error executing command.");
+                let [err, er_size] = sderr.read_line(null);
+                return err.toString();
             }
             else {
-                return out.toString();
+                let outS = out.toString();
+                outS += " ";
+                return outS;
             }
+        },
+
+        _doScroll: function(str) {
+            var buf = str[0];
+            var str2 = "";
+            for(var i=1;i<str.length;i++) {
+                str2 += str[i];
+            }
+
+            str2 += buf;
+            return str2;
         },
 
         _isFound: function(str) {
@@ -85,9 +106,17 @@ const CommandOutput = new Lang.Class({
         },
 
         _refresh: function() {
-            this._load();
-            let iText = this._doCommand();
-            this._outputLabel.set_text(iText);
+            if(!this._loaded) {
+                this._load();
+                this._iText = this._doCommand();
+                this._loaded = true;
+            }
+            do
+            {
+                this._iText = this._doScroll(this._iText);
+                this._outputLabel.set_text(this._iText);
+            }
+            while(!this._isScroll);
         },
 
         _update: function() {
@@ -100,6 +129,7 @@ const CommandOutput = new Lang.Class({
         _load: function() {
             this._command = this._settings.get_string(Settings.Keys.COMMAND);
             this._refreshRate = this._settings.get_int(Settings.Keys.RATE);
+            this._isScroll = this._settings.get_boolean(Settings.Keys.ISSCROLL);
         },
 
         _save: function() {

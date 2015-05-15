@@ -10,5 +10,10 @@
             <summary>Command to run</summary>
             <description>Set to any command that is in $PATH</description>
         </key>
+        <key name="isscroll" type="b">
+            <default>false</default>
+            <summary>Scroll text output</summary>
+            <description>Scroll the output of the command</description>
+        </key>
     </schema>
 </schemalist>

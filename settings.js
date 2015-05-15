@@ -6,7 +6,8 @@ const SCHEMA_NAME = "org.gnome.shell.extensions.commandoutput";
 
 const Keys = {
     RATE: 'refresh-rate',
-    COMMAND: 'command'
+    COMMAND: 'command',
+    ISSCROLL: 'isscroll'
 };
 
 function getSchema(extension) {
