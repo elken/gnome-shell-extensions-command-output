@@ -5,7 +5,8 @@
   "shell-version": [
     "3.10", 
     "3.12", 
-    "3.14"
+    "3.14",
+    "3.16"
   ], 
   "url": "https://www.github.com/elken/gnome-shell-extensions-command-output", 
   "uuid": "commandoutput@elken.tdos.gmail.com", 

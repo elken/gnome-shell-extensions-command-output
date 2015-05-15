@@ -34,7 +34,11 @@ const CommandOutputPrefs = new GObject.Class({
 
             this.main.attach(new Gtk.Label({label: _("Command to output"),
                                             hexpand: true,
-                                            halign: Gtk.Align.START}), 1, 2, 1, 1)
+                                            halign: Gtk.Align.START}), 1, 2, 1, 1);
+
+            this.main.attach(new Gtk.Label({label: _("Scroll output?"),
+                                            hexpand: true,
+                                            halign: Gtk.Align.START}), 1, 3, 1, 1);
 
             this.rate = new Gtk.SpinButton({
                     adjustment: new Gtk.Adjustment({
@@ -45,18 +49,23 @@ const CommandOutputPrefs = new GObject.Class({
                     halign: Gtk.Align.END
             });
 
+            this.isScroll = new Gtk.CheckButton();
+
             this.command = new Gtk.Entry();
 
             this.main.attach(this.rate, 4, 1, 2, 1);
             this.main.attach(this.command, 4, 2, 2, 1);
+            this.main.attach(this.isScroll, 4, 3, 2, 1);
 
             this._settings = Settings.getSchema(Extension);
 
             this._settings.bind(Settings.Keys.RATE,         this.rate,    'value',Gio.SettingsBindFlags.DEFAULT);
             this._settings.bind(Settings.Keys.COMMAND,      this.command, 'text', Gio.SettingsBindFlags.DEFAULT);
+            this._settings.bind(Settings.Keys.ISSCROLL,     this.isScroll, 'active', Gio.SettingsBindFlags.DEFAULT);
 
             this._commandID = this.command.connect('activate', Lang.bind(this, this._save));
             this._rateID = this.rate.connect('value-changed', Lang.bind(this, this._save));
+            this._isScrollID = this.isScroll.connect('toggled', Lang.bind(this, this._save));
 
             this.main.show_all();
         },
@@ -64,6 +73,7 @@ const CommandOutputPrefs = new GObject.Class({
         _save: function() {
             this._settings.set_string(Settings.Keys.COMMAND, this.command.text);
             this._settings.set_int(Settings.Keys.RATE, this.rate.value);
+            this._settings.set_boolean(Settings.Keys.ISSCROLL, this.isScroll.active);
         },
 });
 
