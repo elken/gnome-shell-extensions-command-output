@@ -19,7 +19,7 @@ const CommandOutput = new Lang.Class({
 
         enable: function() {
             this._outputLabel = new St.Label({style_class: "co-label"});
-            this._output = new St.Bin({reactive: true, 
+            this._output = new St.Bin({reactive: true,
                 track_hover: true
             });
 
@@ -45,11 +45,7 @@ const CommandOutput = new Lang.Class({
         },
 
         _doCommand: function() {
-            [res,pid,fdin,fdout,fderr] = GLib.spawn_async_with_pipes(null, this._toUtfArray(this._command), null, GLib.SpawnFlags.SEARCH_PATH, null);
-            let outstream = new Gio.UnixInputStream({fd:fdout,close_fd:true});
-            let stdout = new Gio.DataInputStream({base_stream: outstream});
-
-            let [out, size] = stdout.read_line(null);
+            let [res, out] = GLib.spawn_sync(null, this._toUtfArray(this._command), null, GLib.SpawnFlags.SEARCH_PATH, null);
 
             if(out == null) {
                 return _("Error executing command.");
